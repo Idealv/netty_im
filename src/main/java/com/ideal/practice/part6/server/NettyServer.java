@@ -2,6 +2,7 @@ package com.ideal.practice.part6.server;
 
 import com.ideal.base.GenericNettyServer;
 import com.ideal.practice.part12.*;
+import com.ideal.practice.part13.Spliter;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -12,7 +13,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class NettyServer extends GenericNettyServer {
 
     public static void main(String[] args) {
-        //监听端口，accept新连接的线程组
+        //监听端口，accept新连接的线程组    1
         NioEventLoopGroup boss = new NioEventLoopGroup();
         //处理每一条连接数据读写的线程组
         NioEventLoopGroup worker = new NioEventLoopGroup();
@@ -31,8 +32,7 @@ public class NettyServer extends GenericNettyServer {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         //ch.pipeline().addLast(new FirstServerHandler());
-                        //添加登录功能
-                        //ch.pipeline().addLast(new ServerHandler());
+                        ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginRequestHandler());
                         ch.pipeline().addLast(new MessageRequestHandler());

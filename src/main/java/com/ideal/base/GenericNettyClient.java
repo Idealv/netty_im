@@ -48,11 +48,9 @@ public class GenericNettyClient{
                     Scanner sc = new Scanner(System.in);
                     String line = sc.nextLine();
 
-                    MessageRequestPacket requestPacket = new MessageRequestPacket();
-                    requestPacket.setMessage(line);
-                    //decode
-                    ByteBuf buf = PacketCodeC.INSTANCE.encode(channel.alloc(), requestPacket);
-                    channel.writeAndFlush(buf);
+                    MessageRequestPacket messageRequestPacket = new MessageRequestPacket();
+                    messageRequestPacket.setMessage(line);
+                    channel.writeAndFlush(messageRequestPacket);
                 }
             }
         }).start();

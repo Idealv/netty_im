@@ -9,14 +9,9 @@ import java.util.Date;
 
 public class FirstServerHandler extends GenericHandler {
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf buf = (ByteBuf) msg;
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        ByteBuf byteBuf = (ByteBuf) msg;
 
-        System.out.println(new Date() + "服务端读取到数据:" +
-                buf.toString(Charset.forName("utf-8")));
-
-        System.out.println(new Date() + "服务端向客户端写入数据!");
-        ByteBuf out = getByte(ctx, "你好这里是服务端");
-        ctx.channel().writeAndFlush(out);
+        System.out.println(new Date() + ": 服务端读到数据 -> " + byteBuf.toString(Charset.forName("utf-8")));
     }
 }

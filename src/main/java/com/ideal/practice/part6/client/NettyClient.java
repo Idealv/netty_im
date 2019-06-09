@@ -5,6 +5,7 @@ import com.ideal.practice.part12.LoginResponseHandler;
 import com.ideal.practice.part12.MessageResponseHandler;
 import com.ideal.practice.part12.PacketDecoder;
 import com.ideal.practice.part12.PacketEncoder;
+import com.ideal.practice.part13.Spliter;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -34,8 +35,8 @@ public class NettyClient extends GenericNettyClient {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
                         //channel.pipeline().addLast(new FirstClientHandler());
-                        //添加客户端登录功能
-                        //channel.pipeline().addLast(new ClientHandler());
+                        //添加拆包器
+                        ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginResponseHandler());
                         ch.pipeline().addLast(new MessageResponseHandler());
