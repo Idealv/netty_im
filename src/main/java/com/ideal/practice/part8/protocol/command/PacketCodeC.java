@@ -1,5 +1,7 @@
 package com.ideal.practice.part8.protocol.command;
 
+import com.ideal.practice.part10.MessageRequestPacket;
+import com.ideal.practice.part10.MessageResponsePacket;
 import com.ideal.practice.part8.serialize.Serializer;
 import com.ideal.practice.part8.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -7,7 +9,8 @@ import io.netty.buffer.ByteBufAllocator;
 
 import java.util.HashMap;
 import java.util.Map;
-import static com.ideal.practice.part8.protocol.command.Command.LOGIN_REQUEST;
+
+import static com.ideal.practice.part8.protocol.command.Command.*;
 
 public class PacketCodeC {
     public static final PacketCodeC INSTANCE = new PacketCodeC();
@@ -19,6 +22,9 @@ public class PacketCodeC {
     static {
         packetTypeMap = new HashMap<>();
         packetTypeMap.put(LOGIN_REQUEST, LoginRequestPacket.class);
+        packetTypeMap.put(LOGIN_RESPONSE, LoginResponsePacket.class);
+        packetTypeMap.put(MESSAGE_REQUEST, MessageRequestPacket.class);
+        packetTypeMap.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();
@@ -46,7 +52,7 @@ public class PacketCodeC {
         buffer.writeBytes(bytes);
         return buffer;
     }
-
+    //buf->byte->JSON serialize
     public Packet decode(ByteBuf buf) {
         //skip magicNumber
         buf.skipBytes(4);
