@@ -1,7 +1,7 @@
 package com.ideal.practice.part6.server;
 
 import com.ideal.base.GenericNettyServer;
-import com.ideal.practice.part9.ServerHandler;
+import com.ideal.practice.part12.*;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -32,7 +32,11 @@ public class NettyServer extends GenericNettyServer {
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         //ch.pipeline().addLast(new FirstServerHandler());
                         //添加登录功能
-                        ch.pipeline().addLast(new ServerHandler());
+                        //ch.pipeline().addLast(new ServerHandler());
+                        ch.pipeline().addLast(new PacketDecoder());
+                        ch.pipeline().addLast(new LoginRequestHandler());
+                        ch.pipeline().addLast(new MessageRequestHandler());
+                        ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
         bind(serverBootstrap,8000);

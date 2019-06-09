@@ -1,7 +1,10 @@
 package com.ideal.practice.part6.client;
 
 import com.ideal.base.GenericNettyClient;
-import com.ideal.practice.part9.ClientHandler;
+import com.ideal.practice.part12.LoginResponseHandler;
+import com.ideal.practice.part12.MessageResponseHandler;
+import com.ideal.practice.part12.PacketDecoder;
+import com.ideal.practice.part12.PacketEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -29,10 +32,15 @@ public class NettyClient extends GenericNettyClient {
                 .option(ChannelOption.TCP_NODELAY,true)
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
-                    protected void initChannel(SocketChannel channel) throws Exception {
+                    protected void initChannel(SocketChannel ch) throws Exception {
                         //channel.pipeline().addLast(new FirstClientHandler());
                         //添加客户端登录功能
-                        channel.pipeline().addLast(new ClientHandler());
+                        //channel.pipeline().addLast(new ClientHandler());
+                        ch.pipeline().addLast(new PacketDecoder());
+                        ch.pipeline().addLast(new LoginResponseHandler());
+                        ch.pipeline().addLast(new MessageResponseHandler());
+                        ch.pipeline().addLast(new PacketEncoder());
+
                     }
                 });
         connect(bootstrap, HOST, PORT, MAX_RETRY);

@@ -33,10 +33,7 @@ public class PacketCodeC {
 
     private PacketCodeC(){}
 
-    public ByteBuf encode(ByteBufAllocator bufAllocator, Packet packet) {
-        //返回适配 io 读写相关的内存
-        ByteBuf buffer = bufAllocator.ioBuffer();
-
+    public void encode(ByteBuf buffer, Packet packet) {
         byte[] bytes = Serializer.DEFAULT.serialize(packet);
         //1.magicNumber
         buffer.writeInt(MAGIC_NUMBER);
@@ -50,7 +47,6 @@ public class PacketCodeC {
         buffer.writeInt(bytes.length);
         //6.data
         buffer.writeBytes(bytes);
-        return buffer;
     }
     //buf->byte->JSON serialize
     public Packet decode(ByteBuf buf) {
