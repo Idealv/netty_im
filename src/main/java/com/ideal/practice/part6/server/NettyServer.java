@@ -3,6 +3,7 @@ package com.ideal.practice.part6.server;
 import com.ideal.base.GenericNettyServer;
 import com.ideal.practice.part12.*;
 import com.ideal.practice.part13.Spliter;
+import com.ideal.practice.part14.LifeCyCleTestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -34,6 +35,7 @@ public class NettyServer extends GenericNettyServer {
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         //ch.pipeline().addLast(new FirstServerHandler());
                         ChannelPipeline pipeline = ch.pipeline();
+                        pipeline.addLast(new LifeCyCleTestHandler());
                         pipeline.addLast(new Spliter());
                         //解码
                         pipeline.addLast(new PacketDecoder());
