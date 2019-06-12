@@ -1,7 +1,9 @@
 package com.ideal.base;
 
-import com.ideal.practice.part10.LoginUtil;
 import com.ideal.practice.part10.MessageRequestPacket;
+import com.ideal.practice.part16.Session;
+import com.ideal.practice.part16.SessionUtil;
+import com.ideal.practice.part8.protocol.command.LoginRequestPacket;
 import com.ideal.practice.part8.protocol.command.PacketCodeC;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -25,9 +27,9 @@ public class GenericNettyClient{
         bootstrap.connect(host,port).addListener(future -> {
             if (future.isSuccess()){
                 log.info("连接成功!");
-                Channel ch = ((ChannelFuture) future).channel();
+                Channel channel = ((ChannelFuture) future).channel();
                 //开启读线程读取客户端输入发往客户端
-                startConsoleThread(ch);
+                startConsoleThread(channel);
             }else if (retry==0){
                 log.info("连接次数已用完,放弃连接");
             }else {
@@ -41,18 +43,33 @@ public class GenericNettyClient{
     }
 
     public static void startConsoleThread(Channel channel){
+        Scanner sc = new Scanner(System.in);
+        LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
+
         new Thread(()->{
             while (!Thread.interrupted()){
-//                if (LoginUtil.hasLogin(channel)){
-                    log.info("客户端准备发送消息到服务端:");
-                    Scanner sc = new Scanner(System.in);
-                    String line = sc.nextLine();
+                if (!SessionUtil.hasLogin(channel)){
+                    log.info("输入用户名登录");
+                    String username = sc.nextLine();
 
-                    MessageRequestPacket messageRequestPacket = new MessageRequestPacket();
-                    messageRequestPacket.setMessage(line);
-                    channel.writeAndFlush(messageRequestPacket);
-//                }
+                    loginRequestPacket.setUsername(username);
+                    loginRequestPacket.setPassword("pwd");
+                    channel.writeAndFlush(loginRequestPacket);
+                    waitForLogin();
+                }else {
+                    String toUserId = sc.next();
+                    String message = sc.next();
+                    channel.writeAndFlush(new MessageRequestPacket(toUserId,message));
+                }
             }
         }).start();
+    }
+
+    private static void waitForLogin(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+
+        }
     }
 }

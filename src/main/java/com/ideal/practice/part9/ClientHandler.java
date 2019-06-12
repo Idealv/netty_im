@@ -1,18 +1,5 @@
 package com.ideal.practice.part9;
 
-import com.ideal.practice.part10.LoginUtil;
-import com.ideal.practice.part10.MessageResponsePacket;
-import com.ideal.practice.part8.protocol.command.LoginRequestPacket;
-import com.ideal.practice.part8.protocol.command.LoginResponsePacket;
-import com.ideal.practice.part8.protocol.command.Packet;
-import com.ideal.practice.part8.protocol.command.PacketCodeC;
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.Date;
-import java.util.UUID;
 
 //@Slf4j
 //public class ClientHandler extends ChannelInboundHandlerAdapter {
@@ -26,7 +13,7 @@ import java.util.UUID;
 //        loginRequestPacket.setUsername("IdealV");
 //        loginRequestPacket.setPassword("hadoop");
 //        //构造编码对象
-//        //TODO fix that
+//
 //        PacketCodeC.INSTANCE.encode(null, loginRequestPacket);
 //
 //        //ctx.channel().writeAndFlush(buf);

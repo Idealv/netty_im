@@ -10,6 +10,9 @@ public class LoginResponsePacket extends Packet {
 
     private String reason;
 
+    private String userId;
+
+    private String username;
 
     @Override
     public Byte getCommand() {

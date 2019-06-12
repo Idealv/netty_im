@@ -4,6 +4,7 @@ import com.ideal.base.GenericNettyServer;
 import com.ideal.practice.part12.*;
 import com.ideal.practice.part13.Spliter;
 import com.ideal.practice.part14.LifeCyCleTestHandler;
+import com.ideal.practice.part15.AuthHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -35,11 +36,12 @@ public class NettyServer extends GenericNettyServer {
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         //ch.pipeline().addLast(new FirstServerHandler());
                         ChannelPipeline pipeline = ch.pipeline();
-                        pipeline.addLast(new LifeCyCleTestHandler());
+                        //pipeline.addLast(new LifeCyCleTestHandler());
                         pipeline.addLast(new Spliter());
                         //解码
                         pipeline.addLast(new PacketDecoder());
                         pipeline.addLast(new LoginRequestHandler());
+                        pipeline.addLast(new AuthHandler());
                         pipeline.addLast(new MessageRequestHandler());
                         //编码
                         pipeline.addLast(new PacketEncoder());
