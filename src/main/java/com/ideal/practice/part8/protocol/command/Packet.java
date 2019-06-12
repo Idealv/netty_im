@@ -1,7 +1,6 @@
 package com.ideal.practice.part8.protocol.command;
 
 import lombok.Data;
-import lombok.Getter;
 
 @Data
 public abstract class Packet {

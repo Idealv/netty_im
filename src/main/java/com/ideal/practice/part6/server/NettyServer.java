@@ -6,6 +6,7 @@ import com.ideal.practice.part13.Spliter;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
+import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -32,11 +33,14 @@ public class NettyServer extends GenericNettyServer {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         //ch.pipeline().addLast(new FirstServerHandler());
-                        ch.pipeline().addLast(new Spliter());
-                        ch.pipeline().addLast(new PacketDecoder());
-                        ch.pipeline().addLast(new LoginRequestHandler());
-                        ch.pipeline().addLast(new MessageRequestHandler());
-                        ch.pipeline().addLast(new PacketEncoder());
+                        ChannelPipeline pipeline = ch.pipeline();
+                        pipeline.addLast(new Spliter());
+                        //解码
+                        pipeline.addLast(new PacketDecoder());
+                        pipeline.addLast(new LoginRequestHandler());
+                        pipeline.addLast(new MessageRequestHandler());
+                        //编码
+                        pipeline.addLast(new PacketEncoder());
                     }
                 });
         bind(serverBootstrap,8000);

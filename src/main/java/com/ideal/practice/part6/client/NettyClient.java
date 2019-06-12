@@ -9,6 +9,7 @@ import com.ideal.practice.part13.Spliter;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
+import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -36,11 +37,12 @@ public class NettyClient extends GenericNettyClient {
                     protected void initChannel(SocketChannel ch) throws Exception {
                         //channel.pipeline().addLast(new FirstClientHandler());
                         //添加拆包器
-                        ch.pipeline().addLast(new Spliter());
-                        ch.pipeline().addLast(new PacketDecoder());
-                        ch.pipeline().addLast(new LoginResponseHandler());
-                        ch.pipeline().addLast(new MessageResponseHandler());
-                        ch.pipeline().addLast(new PacketEncoder());
+                        ChannelPipeline pipeline = ch.pipeline();
+                        pipeline.addLast(new Spliter());
+                        pipeline.addLast(new PacketDecoder());
+                        pipeline.addLast(new LoginResponseHandler());
+                        pipeline.addLast(new MessageResponseHandler());
+                        pipeline.addLast(new PacketEncoder());
 
                     }
                 });

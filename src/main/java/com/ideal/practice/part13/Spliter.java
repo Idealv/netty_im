@@ -15,6 +15,7 @@ public class Spliter extends LengthFieldBasedFrameDecoder {
 
     @Override
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+        //如果不是当前自定义的协议则直接关闭channel
         if (in.getInt(in.readerIndex())!= PacketCodeC.MAGIC_NUMBER){
             ctx.channel().close();
             return null;

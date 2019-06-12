@@ -9,6 +9,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
 public class PacketEncoder extends MessageToByteEncoder<Packet> {
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, Packet packet, ByteBuf byteBuf) throws Exception {
+        //将packet编码成为ByteBuf对象
         PacketCodeC.INSTANCE.encode(byteBuf, packet);
     }
 }
