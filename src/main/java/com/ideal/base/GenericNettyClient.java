@@ -3,6 +3,8 @@ package com.ideal.base;
 import com.ideal.practice.part10.MessageRequestPacket;
 import com.ideal.practice.part16.Session;
 import com.ideal.practice.part16.SessionUtil;
+import com.ideal.practice.part17.ConsoleCommandManager;
+import com.ideal.practice.part17.LoginConsoleCommand;
 import com.ideal.practice.part8.protocol.command.LoginRequestPacket;
 import com.ideal.practice.part8.protocol.command.PacketCodeC;
 import io.netty.bootstrap.Bootstrap;
@@ -44,32 +46,16 @@ public class GenericNettyClient{
 
     public static void startConsoleThread(Channel channel){
         Scanner sc = new Scanner(System.in);
-        LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
-
+        ConsoleCommandManager consoleCommandManager = new ConsoleCommandManager();
+        LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
         new Thread(()->{
             while (!Thread.interrupted()){
                 if (!SessionUtil.hasLogin(channel)){
-                    log.info("输入用户名登录");
-                    String username = sc.nextLine();
-
-                    loginRequestPacket.setUsername(username);
-                    loginRequestPacket.setPassword("pwd");
-                    channel.writeAndFlush(loginRequestPacket);
-                    waitForLogin();
+                    loginConsoleCommand.exec(sc, channel);
                 }else {
-                    String toUserId = sc.next();
-                    String message = sc.next();
-                    channel.writeAndFlush(new MessageRequestPacket(toUserId,message));
+                    consoleCommandManager.exec(sc, channel);
                 }
             }
         }).start();
-    }
-
-    private static void waitForLogin(){
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-
-        }
     }
 }
