@@ -1,5 +1,6 @@
 package com.ideal.practice.part12;
 
+import com.ideal.practice.part10.LoginUtil;
 import com.ideal.practice.part8.protocol.command.LoginRequestPacket;
 import com.ideal.practice.part8.protocol.command.LoginResponsePacket;
 import io.netty.channel.ChannelHandlerContext;
@@ -17,6 +18,8 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
         //构造服务端响应对象
         if (valid(loginRequestPacket)){
             loginResponsePacket.setSuccess(true);
+            //标识为登录状态
+            LoginUtil.markAsLogin(ctx.channel());
             log.info(new Date()+":登陆成功!");
         }else {
             loginResponsePacket.setSuccess(false);

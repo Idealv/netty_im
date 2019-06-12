@@ -43,7 +43,7 @@ public class GenericNettyClient{
     public static void startConsoleThread(Channel channel){
         new Thread(()->{
             while (!Thread.interrupted()){
-                if (LoginUtil.hasLogin(channel)){
+//                if (LoginUtil.hasLogin(channel)){
                     log.info("客户端准备发送消息到服务端:");
                     Scanner sc = new Scanner(System.in);
                     String line = sc.nextLine();
@@ -51,7 +51,7 @@ public class GenericNettyClient{
                     MessageRequestPacket messageRequestPacket = new MessageRequestPacket();
                     messageRequestPacket.setMessage(line);
                     channel.writeAndFlush(messageRequestPacket);
-                }
+//                }
             }
         }).start();
     }
