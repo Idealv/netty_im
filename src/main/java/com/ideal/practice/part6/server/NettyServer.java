@@ -38,7 +38,7 @@ public class NettyServer extends GenericNettyServer {
                         ChannelPipeline pipeline = ch.pipeline();
                         //pipeline.addLast(new LifeCyCleTestHandler());
                         pipeline.addLast(new Spliter());
-                        //解码
+                        //解码 在这一步出问题
                         pipeline.addLast(new PacketDecoder());
                         pipeline.addLast(new LoginRequestHandler());
                         pipeline.addLast(new AuthHandler());

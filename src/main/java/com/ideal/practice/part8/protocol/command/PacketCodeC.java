@@ -2,6 +2,8 @@ package com.ideal.practice.part8.protocol.command;
 
 import com.ideal.practice.part10.MessageRequestPacket;
 import com.ideal.practice.part10.MessageResponsePacket;
+import com.ideal.practice.part17.CreateGroupRequestPacket;
+import com.ideal.practice.part17.CreateGroupResponsePacket;
 import com.ideal.practice.part8.serialize.Serializer;
 import com.ideal.practice.part8.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -24,6 +26,8 @@ public class PacketCodeC {
         packetTypeMap.put(LOGIN_RESPONSE, LoginResponsePacket.class);
         packetTypeMap.put(MESSAGE_REQUEST, MessageRequestPacket.class);
         packetTypeMap.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
+        packetTypeMap.put(CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
+        packetTypeMap.put(CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();
@@ -39,7 +43,7 @@ public class PacketCodeC {
         //2.version
         buffer.writeByte(packet.getVersion());
         //3.serializerAlgorithm
-        buffer.writeByte(Serializer.JSON_SERIALZER);
+        buffer.writeByte(Serializer.DEFAULT.getSerializeAlogrithm());
         //4.command
         buffer.writeByte(packet.getCommand());
         //5.the length of data

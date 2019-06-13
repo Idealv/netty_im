@@ -5,7 +5,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.nio.charset.Charset;
-import java.util.Date;
 
 public class FirstClientHandler extends GenericHandler {
     @Override

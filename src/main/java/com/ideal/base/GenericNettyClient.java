@@ -1,14 +1,9 @@
 package com.ideal.base;
 
-import com.ideal.practice.part10.MessageRequestPacket;
-import com.ideal.practice.part16.Session;
 import com.ideal.practice.part16.SessionUtil;
 import com.ideal.practice.part17.ConsoleCommandManager;
 import com.ideal.practice.part17.LoginConsoleCommand;
-import com.ideal.practice.part8.protocol.command.LoginRequestPacket;
-import com.ideal.practice.part8.protocol.command.PacketCodeC;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import lombok.extern.slf4j.Slf4j;
