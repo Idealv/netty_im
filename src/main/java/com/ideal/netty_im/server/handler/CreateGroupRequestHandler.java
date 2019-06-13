@@ -5,6 +5,7 @@ import com.ideal.netty_im.protocol.response.CreateGroupResponsePacket;
 import com.ideal.netty_im.util.IDUtil;
 import com.ideal.netty_im.util.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -15,17 +16,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
+@ChannelHandler.Sharable
 public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<CreateGroupRequestPacket> {
+    public static final CreateGroupRequestHandler INSTANCE=new CreateGroupRequestHandler();
+
+    private CreateGroupRequestHandler(){}
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CreateGroupRequestPacket createGroupRequestPacket) throws Exception {
         List<String> userIdList = createGroupRequestPacket.getUserIdList();
         List<String> usernameList = new ArrayList<>();
         ChannelGroup channelGroup = new DefaultChannelGroup(ctx.executor());
 
-        for (String userId:
-             userIdList) {
+        for (String userId :
+                userIdList) {
             Channel channel = SessionUtil.getChannel(userId);
-            if (channel!=null){
+            if (channel != null) {
                 channelGroup.add(channel);
                 usernameList.add(SessionUtil.getSession(channel).getUsername());
             }
@@ -41,6 +47,6 @@ public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<Creat
         log.info("群创建成功:群号为:[" + createGroupResponsePacket.getGroupId() + "]");
         log.info("群里有:[" + usernameList + "]");
 
-        SessionUtil.bindChannelGroup(groupId,channelGroup);
+        SessionUtil.bindChannelGroup(groupId, channelGroup);
     }
 }

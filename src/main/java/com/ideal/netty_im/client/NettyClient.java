@@ -1,16 +1,11 @@
 package com.ideal.netty_im.client;
 
-import com.ideal.netty_im.client.handler.LoginResponseHandler;
-import com.ideal.netty_im.client.handler.MessageResponseHandler;
+import com.ideal.netty_im.client.handler.*;
+import com.ideal.netty_im.codec.PacketCodecHandler;
 import com.ideal.netty_im.codec.PacketDecoder;
 import com.ideal.netty_im.codec.PacketEncoder;
 import com.ideal.netty_im.codec.Spliter;
-import com.ideal.netty_im.client.handler.CreateGroupResponseHandler;
-import com.ideal.netty_im.client.handler.LogoutResponseHandler;
-import com.ideal.netty_im.client.handler.JoinGroupResponseHandler;
-import com.ideal.netty_im.client.handler.ListGroupMemberResponseHandler;
-import com.ideal.netty_im.client.handler.QuitGroupResponseHandler;
-import com.ideal.netty_im.client.handler.GroupMessageResponseHandler;
+import com.ideal.netty_im.handler.IMIdleStateHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -43,27 +38,30 @@ public class NettyClient extends GenericNettyClient {
                         //channel.pipeline().addLast(new FirstClientHandler());
                         //添加拆包器
                         ChannelPipeline pipeline = ch.pipeline();
+                        pipeline.addLast(new IMIdleStateHandler());
                         pipeline.addLast(new Spliter());
                         //解码器
                         pipeline.addLast(new PacketDecoder());
                         //登陆响应处理器
-                        pipeline.addLast(new LoginResponseHandler());
+                        pipeline.addLast(LoginResponseHandler.INSTANCE);
                         //发消息响应处理器
-                        pipeline.addLast(new MessageResponseHandler());
+                        pipeline.addLast(MessageResponseHandler.INSTANCE);
                         //建群响应处理器
-                        pipeline.addLast(new CreateGroupResponseHandler());
+                        pipeline.addLast(CreateGroupResponseHandler.INSTANCE);
                         //加群响应处理器
-                        pipeline.addLast(new JoinGroupResponseHandler());
+                        pipeline.addLast(JoinGroupResponseHandler.INSTANCE);
                         //退群响应处理器
-                        pipeline.addLast(new QuitGroupResponseHandler());
+                        pipeline.addLast(QuitGroupResponseHandler.INSTANCE);
                         //显示群成员响应处理器
-                        pipeline.addLast(new ListGroupMemberResponseHandler());
+                        pipeline.addLast(ListGroupMemberResponseHandler.INSTANCE);
                         //群消息响应处理器
-                        pipeline.addLast(new GroupMessageResponseHandler());
+                        pipeline.addLast(GroupMessageResponseHandler.INSTANCE);
                         //登出响应处理器
-                        pipeline.addLast(new LogoutResponseHandler());
+                        pipeline.addLast(LogoutResponseHandler.INSTANCE);
                         //译码器
                         pipeline.addLast(new PacketEncoder());
+                        //心跳定时器
+                        pipeline.addLast(new HeartBeatTimerHandler());
 
                     }
                 });
