@@ -1,6 +1,9 @@
 package com.ideal.practice.part17.console;
 
 import com.ideal.practice.part16.SessionUtil;
+import com.ideal.practice.part18.JoinGroupConsoleCommand;
+import com.ideal.practice.part18.ListGroupMemberConsoleCommand;
+import com.ideal.practice.part18.QuitGroupConsoleCommand;
 import io.netty.channel.Channel;
 
 import java.util.HashMap;
@@ -15,6 +18,9 @@ public class ConsoleCommandManager implements ConsoleCommand {
         consoleCommandMap.put("createGroup", new CreateGroupConsoleCommand());
         consoleCommandMap.put("logout", new LogoutConsoleCommand());
         consoleCommandMap.put("sendToUser", new SendToUserConsoleCommand());
+        consoleCommandMap.put("joinGroup", new JoinGroupConsoleCommand());
+        consoleCommandMap.put("quitGroup", new QuitGroupConsoleCommand());
+        consoleCommandMap.put("listGroupMembers", new ListGroupMemberConsoleCommand());
     }
 
     @Override

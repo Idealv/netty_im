@@ -27,15 +27,17 @@ public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<Creat
                 usernameList.add(SessionUtil.getSession(channel).getUsername());
             }
         }
-
+        String groupId = IDUtil.randomId();
         CreateGroupResponsePacket createGroupResponsePacket = new CreateGroupResponsePacket();
         createGroupResponsePacket.setSuccess(true);
-        createGroupResponsePacket.setGroupId(IDUtil.randomId());
+        createGroupResponsePacket.setGroupId(groupId);
         createGroupResponsePacket.setUsernameList(usernameList);
 
         channelGroup.writeAndFlush(createGroupResponsePacket);
 
         log.info("群创建成功:群号为:[" + createGroupResponsePacket.getGroupId() + "]");
         log.info("群里有:[" + usernameList + "]");
+
+        SessionUtil.bindChannelGroup(groupId,channelGroup);
     }
 }

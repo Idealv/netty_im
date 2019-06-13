@@ -8,6 +8,9 @@ import com.ideal.practice.part12.PacketEncoder;
 import com.ideal.practice.part13.Spliter;
 import com.ideal.practice.part17.CreateGroupResponseHandler;
 import com.ideal.practice.part17.LogoutResponseHandler;
+import com.ideal.practice.part18.JoinGroupResponseHandler;
+import com.ideal.practice.part18.ListGroupMemberResponseHandler;
+import com.ideal.practice.part18.QuitGroupResponseHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -41,11 +44,23 @@ public class NettyClient extends GenericNettyClient {
                         //添加拆包器
                         ChannelPipeline pipeline = ch.pipeline();
                         pipeline.addLast(new Spliter());
+                        //解码器
                         pipeline.addLast(new PacketDecoder());
+                        //登陆响应处理器
                         pipeline.addLast(new LoginResponseHandler());
-                        pipeline.addLast(new LogoutResponseHandler());
+                        //发消息响应处理器
                         pipeline.addLast(new MessageResponseHandler());
+                        //建群响应处理器
                         pipeline.addLast(new CreateGroupResponseHandler());
+                        //加群响应处理器
+                        pipeline.addLast(new JoinGroupResponseHandler());
+                        //退群响应处理器
+                        pipeline.addLast(new QuitGroupResponseHandler());
+                        //显示群成员响应处理器
+                        pipeline.addLast(new ListGroupMemberResponseHandler());
+                        //登出响应处理器
+                        pipeline.addLast(new LogoutResponseHandler());
+                        //译码器
                         pipeline.addLast(new PacketEncoder());
 
                     }

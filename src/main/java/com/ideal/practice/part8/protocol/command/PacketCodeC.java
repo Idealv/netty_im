@@ -4,6 +4,9 @@ import com.ideal.practice.part10.MessageRequestPacket;
 import com.ideal.practice.part10.MessageResponsePacket;
 import com.ideal.practice.part17.CreateGroupRequestPacket;
 import com.ideal.practice.part17.CreateGroupResponsePacket;
+import com.ideal.practice.part17.LogoutRequestPacket;
+import com.ideal.practice.part17.LogoutResponsePacket;
+import com.ideal.practice.part18.*;
 import com.ideal.practice.part8.serialize.Serializer;
 import com.ideal.practice.part8.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -28,6 +31,14 @@ public class PacketCodeC {
         packetTypeMap.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
         packetTypeMap.put(CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
         packetTypeMap.put(CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
+        packetTypeMap.put(LOGOUT_REQUEST, LogoutRequestPacket.class);
+        packetTypeMap.put(LOGOUT_RESPONSE, LogoutResponsePacket.class);
+        packetTypeMap.put(JOIN_GROUP_REQUEST, JoinGroupRequestPacket.class);
+        packetTypeMap.put(JOIN_GROUP_RESPONSE, JoinGroupResponsePacket.class);
+        packetTypeMap.put(QUIT_GROUP_REQUEST, QuitGroupRequestPacket.class);
+        packetTypeMap.put(QUIT_GROUP_RESPONSE, QuitGroupResponsePacket.class);
+        packetTypeMap.put(LIST_GROUP_MEMBERS_REQUEST, ListGroupMemberRequestPacket.class);
+        packetTypeMap.put(LIST_GROUP_MEMBERS_RESPONSE, ListGroupMemberResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();
