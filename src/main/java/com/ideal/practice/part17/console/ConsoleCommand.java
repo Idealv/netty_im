@@ -1,4 +1,4 @@
-package com.ideal.practice.part17;
+package com.ideal.practice.part17.console;
 
 import io.netty.channel.Channel;
 

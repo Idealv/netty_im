@@ -35,4 +35,8 @@ public class SessionUtil {
 
         return userIdChannelMap.get(userId);
     }
+
+    public static Map<String, Channel> getUserIdChannelMap() {
+        return userIdChannelMap;
+    }
 }

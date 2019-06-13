@@ -5,6 +5,7 @@ import com.ideal.practice.part12.*;
 import com.ideal.practice.part13.Spliter;
 import com.ideal.practice.part15.AuthHandler;
 import com.ideal.practice.part17.CreateGroupRequestHandler;
+import com.ideal.practice.part17.LogoutRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -44,6 +45,7 @@ public class NettyServer extends GenericNettyServer {
                         pipeline.addLast(new AuthHandler());
                         pipeline.addLast(new MessageRequestHandler());
                         pipeline.addLast(new CreateGroupRequestHandler());
+                        pipeline.addLast(new LogoutRequestHandler());
                         //编码
                         pipeline.addLast(new PacketEncoder());
                     }

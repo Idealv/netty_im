@@ -13,8 +13,8 @@ public class MessageRequestPacket extends Packet {
     private String toUserId;
 
     public MessageRequestPacket(String toUserId,String message) {
-        this.message = message;
         this.toUserId = toUserId;
+        this.message = message;
     }
 
     @Override

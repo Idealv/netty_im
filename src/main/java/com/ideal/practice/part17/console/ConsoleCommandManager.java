@@ -1,4 +1,4 @@
-package com.ideal.practice.part17;
+package com.ideal.practice.part17.console;
 
 import com.ideal.practice.part16.SessionUtil;
 import io.netty.channel.Channel;
@@ -13,6 +13,8 @@ public class ConsoleCommandManager implements ConsoleCommand {
     public ConsoleCommandManager(){
         consoleCommandMap = new HashMap<>();
         consoleCommandMap.put("createGroup", new CreateGroupConsoleCommand());
+        consoleCommandMap.put("logout", new LogoutConsoleCommand());
+        consoleCommandMap.put("sendToUser", new SendToUserConsoleCommand());
     }
 
     @Override

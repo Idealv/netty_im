@@ -7,6 +7,7 @@ import com.ideal.practice.part12.PacketDecoder;
 import com.ideal.practice.part12.PacketEncoder;
 import com.ideal.practice.part13.Spliter;
 import com.ideal.practice.part17.CreateGroupResponseHandler;
+import com.ideal.practice.part17.LogoutResponseHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -42,6 +43,7 @@ public class NettyClient extends GenericNettyClient {
                         pipeline.addLast(new Spliter());
                         pipeline.addLast(new PacketDecoder());
                         pipeline.addLast(new LoginResponseHandler());
+                        pipeline.addLast(new LogoutResponseHandler());
                         pipeline.addLast(new MessageResponseHandler());
                         pipeline.addLast(new CreateGroupResponseHandler());
                         pipeline.addLast(new PacketEncoder());

@@ -1,5 +1,6 @@
-package com.ideal.practice.part17;
+package com.ideal.practice.part17.console;
 
+import com.ideal.practice.part17.CreateGroupRequestPacket;
 import io.netty.channel.Channel;
 
 import java.util.Arrays;
